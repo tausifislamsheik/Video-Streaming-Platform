@@ -22,14 +22,28 @@ const loadVideos = async () =>{
 
 };
 
+// Day, Hour, Minute & Second calculation
+
+const getTime = (time) => {
+    const day = parseInt(time / 86400); // 86400 seconds in a day
+    const remainingHour = parseInt((time % 86400) / 3600); // hours after days
+    let remainingSecond = time % 3600;
+    const minute = parseInt((remainingSecond % 3600) / 60); // minutes after hours
+    remainingSecond = remainingSecond % 60; // remaining seconds after minutes
+
+    return(`${day} day ${remainingHour} hrs ${minute} min ${remainingSecond} sec ago`);
+};
+
 const showDisplayVideos = (videos) =>{
     const videosContainer = document.querySelector('#videos-container')
         videos.forEach(video =>{
             const div = document.createElement('div');
             div.classList = "card"
             div.innerHTML = `
-                 <figure class="h-[200px]">
+                 <figure class="h-[200px] relative">
                     <img class="w-full h-full object-cover" src=${video.thumbnail} />
+                    ${video.others?.posted_date.length === 0 ? '' : `<span class="absolute text-white bg-gray-900 p-1 rounded-lg right-2 bottom-2">${getTime(video.others?.posted_date)}</span>` }
+                    
                  </figure>
                  <div class="py-5 flex gap-2">
                      
