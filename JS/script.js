@@ -6,12 +6,29 @@ const loadCategory = async () =>{
 
 // Category based video load feature
 
-const displayCategoryVideos = async (id) =>{
+const displayCategoryVideos = async (id) => {
+  try {
     const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`);
-     const data = await res.json();
-     showDisplayVideos(data.category)
-     
-}
+    const data = await res.json();
+    const videos = data.category; 
+
+    // Remove 'active' class from all buttons
+    document.querySelectorAll('.category-button').forEach(btn => {
+      btn.classList.remove('bg-red-500', 'text-white');
+    });
+
+    // Add 'active' to the clicked one
+    const activeBtn = document.getElementById(`btn-${id}`);
+    if (activeBtn) {
+      activeBtn.classList.add('bg-red-500', 'text-white');
+    }
+
+    showDisplayVideos(videos);
+  } catch (error) {
+    console.error('Error fetching videos:', error);
+  }
+};
+
 
 
 // Category button section
@@ -20,9 +37,9 @@ const showDisplayCategoryButton = (category) =>{
     const categoryContainer = document.querySelector('#btn-category');
     category.forEach(item => {
         const buttonContainer = document.createElement('div');
-        buttonContainer.classList = 'btn bg-slate-100'
+        // buttonContainer.classList = 'btn'
         buttonContainer.innerHTML = `
-             <button class="cursor-pointer" onclick="displayCategoryVideos(${item.category_id})">
+             <button id="btn-${item.category_id}" class="btn cursor-pointer category-button" onclick="displayCategoryVideos(${item.category_id})">
                ${item.category}
              </button>
         `
