@@ -1,16 +1,30 @@
 const loadCategory = async () =>{
      const res = await fetch('https://openapi.programming-hero.com/api/phero-tube/categories');
      const data = await res.json();
-     showDisplayCategory(data.categories);
+     showDisplayCategoryButton(data.categories);
 }
 
-const showDisplayCategory = (category) =>{
+const displayCategoryVideos = async (id) =>{
+    const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`);
+     const data = await res.json();
+     showDisplayVideos(data.category)
+     
+}
+
+
+
+const showDisplayCategoryButton = (category) =>{
     const categoryContainer = document.querySelector('#btn-category');
     category.forEach(item => {
-        const button = document.createElement('btn');
-        button.classList = 'btn bg-slate-100'
-        button.innerText = item.category;
-        categoryContainer.append(button)
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList = 'btn bg-slate-100'
+        buttonContainer.innerHTML = `
+             <button class="cursor-pointer" onclick="displayCategoryVideos(${item.category_id})">
+               ${item.category}
+             </button>
+        `
+        
+        categoryContainer.append(buttonContainer);
     });
 
 };
@@ -35,14 +49,15 @@ const getTime = (time) => {
 };
 
 const showDisplayVideos = (videos) =>{
-    const videosContainer = document.querySelector('#videos-container')
+    const videosContainer = document.querySelector('#videos-container');
+    videosContainer.innerHTML = '';
         videos.forEach(video =>{
             const div = document.createElement('div');
             div.classList = "card"
             div.innerHTML = `
                  <figure class="h-[200px] relative">
                     <img class="w-full h-full object-cover" src=${video.thumbnail} />
-                    ${video.others?.posted_date.length === 0 ? '' : `<span class="absolute text-white bg-gray-900 p-1 rounded-lg right-2 bottom-2">${getTime(video.others?.posted_date)}</span>` }
+                    ${video.others?.posted_date.length === 0 ? '' : `<span class="absolute text-white text-sm bg-gray-900 p-1 rounded-lg right-2 bottom-2">${getTime(video.others?.posted_date)}</span>` }
                     
                  </figure>
                  <div class="py-5 flex gap-2">
