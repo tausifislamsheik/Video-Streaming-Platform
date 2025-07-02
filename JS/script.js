@@ -4,6 +4,8 @@ const loadCategory = async () =>{
      showDisplayCategoryButton(data.categories);
 }
 
+// Category based video load feature
+
 const displayCategoryVideos = async (id) =>{
     const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`);
      const data = await res.json();
@@ -12,6 +14,7 @@ const displayCategoryVideos = async (id) =>{
 }
 
 
+// Category button section
 
 const showDisplayCategoryButton = (category) =>{
     const categoryContainer = document.querySelector('#btn-category');
@@ -48,9 +51,24 @@ const getTime = (time) => {
     return(`${day} day ${remainingHour} hrs ${minute} min ${remainingSecond} sec ago`);
 };
 
+
+// Display video section
+
 const showDisplayVideos = (videos) =>{
     const videosContainer = document.querySelector('#videos-container');
     videosContainer.innerHTML = '';
+    
+    if(videos.length === 0){
+        videosContainer.classList.remove('grid')
+         videosContainer.innerHTML = `
+           <div class="h-[300px] flex flex-col text-center items-center justify-center gap-8">
+             <img class="h-40" src="images/icon.png"/>
+             <p class="text-4xl font-extrabold">Oops!Sorry,There is no <br> content here.</p>
+           </div>
+         `;
+    }else{
+        videosContainer.classList.add('grid')
+    }
         videos.forEach(video =>{
             const div = document.createElement('div');
             div.classList = "card"
