@@ -48,8 +48,8 @@ const showDisplayCategoryButton = (category) =>{
 
 };
 
-const loadVideos = async () =>{
-    const res = await fetch('https://openapi.programming-hero.com/api/phero-tube/videos');
+const loadVideos = async (searchText = '') =>{
+    const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`);
     const data = await res.json();
     showDisplayVideos(data.videos)
 
@@ -118,8 +118,10 @@ const showDisplayVideos = (videos) =>{
         })
 };
 
+// Search functionality section
+
 document.getElementById('search-input').addEventListener('keyup', (e)=>{
-console.log(e.target.value)
+loadVideos(e.target.value)
 })
 
 loadCategory();
