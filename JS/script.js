@@ -37,7 +37,6 @@ const showDisplayCategoryButton = (category) =>{
     const categoryContainer = document.querySelector('#btn-category');
     category.forEach(item => {
         const buttonContainer = document.createElement('div');
-        // buttonContainer.classList = 'btn'
         buttonContainer.innerHTML = `
              <button id="btn-${item.category_id}" class="btn cursor-pointer category-button" onclick="displayCategoryVideos(${item.category_id})">
                ${item.category}
@@ -117,7 +116,11 @@ const showDisplayVideos = (videos) =>{
             `
             videosContainer.append(div)
         })
-}
+};
+
+document.getElementById('search-input').addEventListener('keyup', (e)=>{
+console.log(e.target.value)
+})
 
 loadCategory();
 loadVideos();
