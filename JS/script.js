@@ -1,3 +1,5 @@
+let currentVideos = [];
+
 const loadCategory = async () =>{
      const res = await fetch('https://openapi.programming-hero.com/api/phero-tube/categories');
      const data = await res.json();
@@ -48,12 +50,15 @@ const showDisplayCategoryButton = (category) =>{
 
 };
 
-const loadVideos = async (searchText = '') =>{
+
+
+const loadVideos = async (searchText = '') => {
     const res = await fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`);
     const data = await res.json();
-    showDisplayVideos(data.videos)
-
+    currentVideos = data.videos || []; // Store fetched videos globally
+    showDisplayVideos(currentVideos);
 };
+
 
 // Day, Hour, Minute & Second calculation
 
@@ -122,7 +127,26 @@ const showDisplayVideos = (videos) =>{
 
 document.getElementById('search-input').addEventListener('keyup', (e)=>{
 loadVideos(e.target.value)
-})
+});
+
+// Sort by view functionality section
+
+document.getElementById('sort-view-btn').addEventListener('click', () => {
+    const sortedVideos = [...currentVideos].sort((a, b) => {
+        const getViews = (viewString) => {
+            if (!viewString) return 0;
+            const num = parseFloat(viewString.replace(/[^\d\.]/g, ''));
+            return viewString.toLowerCase().includes('k') ? num * 1000 : num;
+        };
+
+        return getViews(b.others?.views) - getViews(a.others?.views); // descending order
+    });
+
+    showDisplayVideos(sortedVideos);
+});
+
+
+
 
 loadCategory();
 loadVideos();
