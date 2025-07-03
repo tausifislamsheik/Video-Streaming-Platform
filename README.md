@@ -15,16 +15,9 @@ A simple video streaming UI project using HTML, Tailwind CSS (via DaisyUI), and 
 
 ---
 
-## 🖼️ Screenshots
-
-<!-- Add your screenshot path -->
-![App Screenshot](images/screenshot.PNG)
-
----
-
 ## 🌐 Live Demo
 
-👉 [View Live](https://your-live-link.com)
+👉 [View Live]([https://your-live-link.com](https://tausifislamsheik.github.io/Video-Streaming-Platform/))
 
 ---
 
@@ -37,6 +30,9 @@ A simple video streaming UI project using HTML, Tailwind CSS (via DaisyUI), and 
 - Fetch API
 
 ---
+
+![tausifislamsheik github io-Video Streaming Platform-fpscreenshot](https://github.com/user-attachments/assets/97e5fe41-9f94-4e7a-8eba-2e9678674c0f)
+
 
 
 
